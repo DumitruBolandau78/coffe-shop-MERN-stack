@@ -1,0 +1,18 @@
+.products-section {
+    margin-top: 3rem;
+
+    .products-section-title {
+        text-align: center;
+        font-size: 2.7rem;
+
+        span {
+            color: #CBA478;
+        }
+    }
+
+    .products-items {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}

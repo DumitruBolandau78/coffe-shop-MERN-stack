@@ -1,0 +1,38 @@
+.costumer-review {
+    border: 2px solid rgb(24, 24, 24);
+    padding: 3rem 1.5rem;
+    text-align: center;
+
+    i.quote {
+        font-size: 3rem;
+        color: #CBA277;
+        display: flex;
+        justify-content: center;
+    }
+
+    .stars-review {
+        display: flex;
+        justify-content: center;
+        color: #CBA277;
+        gap: .4rem;
+        margin-top: 1rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+    }
+
+    .user-avatar {
+        
+        img {
+            max-width: 100px;
+            border-radius: 50%;
+        }
+    }
+
+    .user-name {
+        margin-top: 1rem;
+        font-size: 1.3rem;
+    }
+}

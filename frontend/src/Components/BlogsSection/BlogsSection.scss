@@ -1,0 +1,22 @@
+.blogs-section {
+    margin-top: 3rem;
+
+    .blogs-collection {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    &-title {
+        text-align: center;
+        font-size: 2.7rem;
+
+        span {
+            color: #CBA478;
+        }
+    }
+
+    .blog-body {
+        padding: 1rem;
+    }
+}

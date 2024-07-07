@@ -1,0 +1,51 @@
+.contact-section {
+    padding-top: 3rem;
+
+    .contact-section-title {
+        text-align: center;
+        font-size: 2.7rem;
+        margin-bottom: 2rem;
+        margin-top: 0;
+
+        span {
+            color: #CBA478;
+        }
+    }
+
+    .form-email {
+        margin: 0 auto;
+        margin-bottom: 2rem;
+        max-width: 900px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 3rem;
+        padding-bottom: 5rem;
+        background-color: #121212;
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #phone {
+            -moz-appearance: textfield;
+        }
+
+        textarea {
+            resize: none;
+            min-height: 150px;
+        }
+
+        input, textarea {
+            max-width: 600px;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: .6rem 1rem;
+            border: none;
+            outline: none;
+        }
+    }
+}

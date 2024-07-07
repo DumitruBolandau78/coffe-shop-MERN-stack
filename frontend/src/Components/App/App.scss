@@ -1,0 +1,23 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: #000201;
+    color: #fff;
+}
+
+section {
+    padding: 0 1rem;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+}

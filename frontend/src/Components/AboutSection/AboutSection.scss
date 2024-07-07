@@ -1,0 +1,40 @@
+.about-section {
+    margin-top: 3rem;
+
+    .section-title {
+        text-align: center;
+        font-size: 2.7rem;
+
+        span {
+            color: #CBA478;
+        }
+    }
+
+    .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #121212;
+
+        .image {
+            background-image: url('../../assets/about-section.webp');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .description {
+            padding: 4rem 2rem;
+
+            .title {
+                text-transform: capitalize;
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+                line-height: 2rem;
+                font-weight: 200;
+            }
+        }
+    }
+}

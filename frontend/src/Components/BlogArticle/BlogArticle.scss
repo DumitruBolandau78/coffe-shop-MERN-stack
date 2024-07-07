@@ -1,0 +1,30 @@
+.blog-article {
+    border: 2px solid #212121;
+
+    .image-box {
+        overflow: hidden;
+    }
+
+    .article-image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        transition: .4s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .article-date {
+        margin-bottom: 1rem;
+        color: #CBA478;
+        font-size: 1.3rem;
+    }
+
+    .article-info {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+    }
+}
