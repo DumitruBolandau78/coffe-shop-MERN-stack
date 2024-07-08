@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.scss';
-// CBA478
-import HomePage from '../../Pages/HomePage';
+import HomePage from '../../Pages/HomePage/HomePage';
 
 const App = () => {
   return (

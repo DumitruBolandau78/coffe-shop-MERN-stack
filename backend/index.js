@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
 
+import authRoutes from './routes/auth.js';
+import emailRoutes from './routes/email.js';
+
 env.config();
 const PORT = 5500 || process.env.PORT;
 
@@ -33,9 +36,8 @@ app.use(cors({
     allowedHeaders: ['Content-type']
 }));
 
-app.get('/', (req, res) => {
-    return res.status(200).send('Hi');
-});
+// app.use('/', authRoutes);
+app.use('/send-email', emailRoutes);
 
 async function start(){
     try {        

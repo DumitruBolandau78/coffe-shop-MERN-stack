@@ -37,15 +37,25 @@
             }
         }
 
-        .cart i {
-            font-size: 2rem;
-            cursor: pointer;
-            transition: .3s;
+        .options {
 
-            &:hover {
-                color: #CBA478;
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            i {
+                font-size: 1.4rem;
+                cursor: pointer;
+                transition: .3s;
+                margin: 0 .4rem;
+    
+                &:hover {
+                    color: #CBA478;
+                }
             }
         }
+        
 
         .open-cart {
             position: fixed;
