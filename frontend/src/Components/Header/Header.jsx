@@ -6,7 +6,8 @@ import HeaderLink from '../HeaderLink/HeaderLink';
 import { useEffect, useState } from 'react';
 import CartItem from '../CartItem/CartItem';
 import ButtonAnimation from '../ButtonAnimation/ButtonAnimation';
-import { Link } from 'react-router-dom';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
 const Header = () => {
   const sections = ['Home', 'About', 'Menu', 'Products', 'Review', 'Contact', 'Blogs'];
@@ -71,6 +72,67 @@ const Header = () => {
     setIsLogin(true);
   }
 
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5500/auth/login', {
+      method: 'GET',
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if(data['logged'] === true){
+        setIsLogged(true);
+      } else {
+        setIsLogged(false);
+      }
+    }).catch(err => console.log(err))
+  }, [])
+
+  const loginHandler = async e => {
+    e.preventDefault();
+
+    await fetch('http://localhost:5500/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: loginEmail, password: loginPassword
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if(data['logged'] === 'Successful'){
+        setIsLogged(true);
+        document.querySelector('.form-popup').classList.remove('show-popup');
+        document.querySelector('.form-popup').classList.remove('show-signup');
+        document.querySelector('.blur-bg-overlay').classList.remove('show-popup');
+      }
+    })
+    .catch(err => console.error(err))
+  }
+
+  const logoutHandler = async () => {
+    await fetch('http://localhost:5500/auth/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data['error']){
+        setIsLogged(false);
+      }
+    })
+    .catch(err => console.error(err))
+  }
+
   return (
     <header className='header' id='header'>
       <div className="inner">
@@ -88,7 +150,7 @@ const Header = () => {
         </nav>
         <div className="options">
           <i onClick={cartModal} className="fa-solid fa-cart-shopping"></i>
-          <i onClick={showAccountModal} className="fa-solid fa-user"></i>
+          { isLogged ? <i onClick={logoutHandler} className="fa-solid fa-right-from-bracket"></i> : <i onClick={showAccountModal} className="fa-solid fa-user"></i> } 
         </div>
         <div className="open-cart" style={isOpenCart ? { right: '0' } : { right: '-100%' }}>
           {cartItems.length ? (cartItems.map((item, idx) => <CartItem key={idx} {...item} />)) : (<p style={{ textAlign: 'center' }}>No products found.</p>)}
@@ -100,56 +162,9 @@ const Header = () => {
       <div className="form-popup">
         <i onClick={closeAccountPopup} className="close-btn fa-solid fa-close"></i>
         {isLogin ?
-          <div className="form-box login">
-            <div className="form-details">
-              <h2>Welcome Back</h2>
-              <p>Please log in using your personal information to stay connected with us.</p>
-            </div>
-            <div className="form-content">
-              <h2>LOGIN</h2>
-              <form action="#" method='post'>
-                <div className="input-field">
-                  <input type="text" required />
-                  <label>Email</label>
-                </div>
-                <div className="input-field">
-                  <input type="password" required />
-                  <label>Password</label>
-                </div>
-                <Link to={'/change-password'} className="forgot-pass-link">Forgot password?</Link>
-                <button type="submit">Log In</button>
-              </form>
-              <div className="bottom-link">
-                Don't have an account?
-                <button onClick={linkToSignup} className='signup-link'>Signup</button>
-              </div>
-            </div>
-          </div>
+          <LoginForm linkToSignup={linkToSignup} loginHandler={loginHandler} loginEmail={loginEmail} setLoginEmail={setLoginEmail} loginPassword={loginPassword} setLoginPassword={setLoginPassword} />
           :
-          <div className="form-box signup">
-            <div className="form-details">
-              <h2>Create Account</h2>
-              <p>To become a part of our community, please sign up using your personal information.</p>
-            </div>
-            <div className="form-content">
-              <h2>SIGNUP</h2>
-              <form action="#">
-                <div className="input-field">
-                  <input type="text" required />
-                  <label>Enter your email</label>
-                </div>
-                <div className="input-field">
-                  <input type="password" required />
-                  <label>Create password</label>
-                </div>
-                <button type="submit">Sign Up</button>
-              </form>
-              <div className="bottom-link">
-                Already have an account?
-                <button onClick={linkToLogin} className='login-link'>Login</button>
-              </div>
-            </div>
-          </div>
+          <SignupForm linkToLogin={linkToLogin} />
         }
       </div>
 

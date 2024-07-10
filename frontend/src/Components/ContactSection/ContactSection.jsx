@@ -11,7 +11,7 @@ const ContactSection = () => {
   const handlerSubmit = async (e) => {
     e.preventDefault();
     try {
-      let result = await fetch('http://localhost:5500/send-email', {
+      await fetch('http://localhost:5500/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -20,14 +20,14 @@ const ContactSection = () => {
           username, email, phone, message
         })
       })
-
-      if(result.ok){
+      .then(() => {
         alert('Thank you for your message');
         setEmail('');
         setUsername('');
         setMessage('');
         setPhone('');
-      }
+      })
+
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +35,7 @@ const ContactSection = () => {
 
   return (
     <section id='contact' className='contact-section'>
-        <form onSubmit={handlerSubmit} className='form-email' action="/send-email" method="post">
+        <form onSubmit={handlerSubmit} className='form-email'>
             <h2 className="contact-section-title"><span>CONTACT</span> US</h2>
             <input onChange={(e) => setUsername(e.target.value)} value={username} type="text" name="username" id="name" placeholder='Name' required />
             <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" name="email" id="email" required placeholder='Email' />

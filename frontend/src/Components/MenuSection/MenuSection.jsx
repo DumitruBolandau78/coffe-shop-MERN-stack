@@ -1,52 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './MenuSection.scss';
 import MenuItem from '../MenuItem/MenuItem';
+import Spinner from '../Spinner/Spinner';
 
 const MenuSection = () => {
     // eslint-disable-next-line no-unused-vars
-    const [menuItems, setMenuItems] = useState([
-        {
-            imgUrl: '/src/assets/MenuImg/coffee1.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        },
-        {
-            imgUrl: '/src/assets/MenuImg/coffee2.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        },
-        {
-            imgUrl: '/src/assets/MenuImg/coffee3.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        },
-        {
-            imgUrl: '/src/assets/MenuImg/coffee4.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        },
-        {
-            imgUrl: '/src/assets/MenuImg/coffee5.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        },
-        {
-            imgUrl: '/src/assets/MenuImg/coffee6.png',
-            title: 'Tasy and Healty',
-            price: 20.99,
-            newPrice: 14.99
-        }
-    ]);
+    const [menuItems, setMenuItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        fetch('http://localhost:5500/products/menu-products')
+            .then(res => res.json())
+            .then(data => { setMenuItems(data), setIsLoading(false)})
+            .catch(err => console.log(err))
+    }, []);
   return (
     <section className='menu-section' id='menu'>
         <h2 className='menu-section-title'>OUR <span>MENU</span></h2>
         <div className="menu-items">
-            { menuItems.map((item, idx) => <MenuItem minWidth={100} minHeight={100} key={idx} {...item} hover={true} />) }
+            { isLoading ? <Spinner /> : menuItems.map(item => <MenuItem minWidth={100} minHeight={100} key={item._id} {...item} hover={true} />) }
         </div>
     </section>
   )

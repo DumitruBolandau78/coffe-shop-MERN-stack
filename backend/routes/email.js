@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
       }
     });
 
-    res.redirect('/');
+    res.status(200).json({message: 'Sent email'});
 });
 
 export default router;
