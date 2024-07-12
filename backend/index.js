@@ -14,20 +14,6 @@ const PORT = 5500 || process.env.PORT;
 
 const app = express();
 
-// const MongoDBStoreSession = MongoDBStore(session);
-// const store = new MongoDBStoreSession({
-//   uri: process.env.MONGODB_URI,
-//   collection: 'sessions'
-// });
-// const Store = MongoDBStoreSession.default || MongoDBStoreSession.Store;
-
-// app.use(session({
-//     secret: 'secret',
-//     resave: false,
-//     saveUninitialized: false,
-//     store
-// }));
-
 const MongoDBStoreSession = MongoDBStore(session);
 const store = new MongoDBStoreSession({
     uri: process.env.MONGODB_URI,
@@ -41,7 +27,7 @@ app.use(
         saveUninitialized: false,
         store,
         cookie: {
-            maxAge: 1000 * 30 * 60 // Session expiry time (optional)
+            maxAge: 1000 * 60 * 30 // Session expiry time (optional)
         }
     })
 );

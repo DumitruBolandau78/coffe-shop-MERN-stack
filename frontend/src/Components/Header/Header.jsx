@@ -4,10 +4,10 @@ import './Account.scss'
 import logo from '../../assets/logo.png';
 import HeaderLink from '../HeaderLink/HeaderLink';
 import { useEffect, useState } from 'react';
-import CartItem from '../CartItem/CartItem';
-import ButtonAnimation from '../ButtonAnimation/ButtonAnimation';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import toBoolean from '../../utils/toBoolean';
+import Cart from '../Cart/Cart';
 
 const Header = () => {
   const sections = ['Home', 'About', 'Menu', 'Products', 'Review', 'Contact', 'Blogs'];
@@ -23,25 +23,6 @@ const Header = () => {
   const cartModal = () => {
     isOpenCart ? setIsOpenCart(false) : setIsOpenCart(true);
   }
-
-  // eslint-disable-next-line no-unused-vars
-  const [cartItems, setCartItems] = useState([
-    {
-      imgUrl: '/src/assets/BlogsImg/article1.png',
-      title: 'Tasty and Refreshing Coffee',
-      price: 220
-    },
-    {
-      imgUrl: '/src/assets/BlogsImg/article2.png',
-      title: 'Tasty and Refreshing Coffee',
-      price: 220
-    },
-    {
-      imgUrl: '/src/assets/BlogsImg/article3.png',
-      title: 'Tasty and Refreshing Coffee',
-      price: 220
-    }
-  ]);
 
   useEffect(() => {
     document.querySelector('.open-cart').style.maxHeight = window.innerHeight - document.querySelector('.header').clientHeight + 'px';
@@ -74,23 +55,8 @@ const Header = () => {
 
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    fetch('http://localhost:5500/auth/login', {
-      method: 'GET',
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      if(data['logged'] === true){
-        setIsLogged(true);
-      } else {
-        setIsLogged(false);
-      }
-    }).catch(err => console.log(err))
-  }, [])
+  
+  const [isLogged, setIsLogged] = useState(toBoolean(localStorage.isAuth));
 
   const loginHandler = async e => {
     e.preventDefault();
@@ -106,12 +72,15 @@ const Header = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       if(data['logged'] === 'Successful'){
-        setIsLogged(true);
+        localStorage.setItem('isAuth', true);
+        setIsLogged(toBoolean(localStorage.isAuth));
+
         document.querySelector('.form-popup').classList.remove('show-popup');
         document.querySelector('.form-popup').classList.remove('show-signup');
         document.querySelector('.blur-bg-overlay').classList.remove('show-popup');
+      } else {
+        console.log(data)
       }
     })
     .catch(err => console.error(err))
@@ -126,8 +95,9 @@ const Header = () => {
     })
     .then(res => res.json())
     .then(data => {
-      if(data['error']){
-        setIsLogged(false);
+      if(data['logout'] === 'Successful'){
+        localStorage.setItem('isAuth', false);
+        setIsLogged(toBoolean(localStorage.isAuth));
       }
     })
     .catch(err => console.error(err))
@@ -150,12 +120,9 @@ const Header = () => {
         </nav>
         <div className="options">
           <i onClick={cartModal} className="fa-solid fa-cart-shopping"></i>
-          { isLogged ? <i onClick={logoutHandler} className="fa-solid fa-right-from-bracket"></i> : <i onClick={showAccountModal} className="fa-solid fa-user"></i> } 
+          { isLogged ? <i title='Logout' onClick={logoutHandler} className="fa-solid fa-right-from-bracket"></i> : <i title='Account' onClick={showAccountModal} className="fa-solid fa-user"></i> } 
         </div>
-        <div className="open-cart" style={isOpenCart ? { right: '0' } : { right: '-100%' }}>
-          {cartItems.length ? (cartItems.map((item, idx) => <CartItem key={idx} {...item} />)) : (<p style={{ textAlign: 'center' }}>No products found.</p>)}
-          {cartItems ? <div className='center'><ButtonAnimation style={{ fontSize: '1rem', padding: '0.8rem 0rem', maxWidth: '150px' }} title={'Checkout Now'} /></div> : ''}
-        </div>
+        <Cart isOpenCart={isOpenCart} />
       </div>
 
       <div className="blur-bg-overlay"></div>

@@ -7,14 +7,6 @@ import bcrypt from 'bcrypt';
 
 const router = Router();
 
-router.get('/login', (req, res) => {
-    console.log(req.session);
-    if(req.session.isAuth){
-        return res.json({logged: true})
-    }
-    return res.json({logged: false})
-});
-
 router.post('/signup', signupValidator, async (req, res) => {
     const {email, password} = req.body;
     try {
@@ -48,11 +40,11 @@ router.post('/login', loginValidator, async (req, res) => {
         req.session.isAuth = true;
         req.session.save(err => {
             if(err) throw new err;
-            return res.json({logged: 'Successful'});
+            return res.json({logged: 'Successful', session: req.session.user});
         });
 
     } catch (error) {
-        console.log(error);
+        return res.json({error: error});
     }
 
 })
