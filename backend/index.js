@@ -8,6 +8,7 @@ import MongoDBStore from 'connect-mongodb-session';
 import authRoutes from './routes/auth.js';
 import emailRoutes from './routes/email.js';
 import productsRoutes from './routes/products.js';
+import favoritesRoutes from './routes/favorites.js';
 
 env.config();
 const PORT = 5500 || process.env.PORT;
@@ -27,7 +28,7 @@ app.use(
         saveUninitialized: false,
         store,
         cookie: {
-            maxAge: 1000 * 60 * 30 // Session expiry time (optional)
+            maxAge: 1000 * 60 * 60 * 24 // Session expiry time (optional)
         }
     })
 );
@@ -47,6 +48,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/send-email', emailRoutes);
 app.use('/products', productsRoutes);
+app.use('/favorites', favoritesRoutes);
 
 async function start() {
     try {

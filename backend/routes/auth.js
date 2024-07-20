@@ -40,7 +40,8 @@ router.post('/login', loginValidator, async (req, res) => {
         req.session.isAuth = true;
         req.session.save(err => {
             if(err) throw new err;
-            return res.json({logged: 'Successful', session: req.session.user});
+
+            return res.json({logged: 'Successful', session: req.session});
         });
 
     } catch (error) {

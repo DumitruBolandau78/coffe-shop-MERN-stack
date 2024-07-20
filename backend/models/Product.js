@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const Product = new Schema({
-    imgUrl: {
+const Product = new mongoose.Schema({
+    title: {
         type: String,
         required: true
     },
@@ -13,14 +13,18 @@ const Product = new Schema({
         type: Number,
         required: true
     },
-    price: {
+    newPrice: {
         type: Number,
         required: true
     },
     type: {
         type: String,
         required: true
+    },
+    text: {
+        type: String,
+        default: ''
     }
 })
 
-export default model('products', Product);
+export default mongoose.model('products', Product);
