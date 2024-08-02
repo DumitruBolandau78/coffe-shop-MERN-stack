@@ -1,7 +1,7 @@
 import './ButtonAnimation.scss';
 
 // eslint-disable-next-line react/prop-types
-const ButtonAnimation = ({ title, style, id, setCartItems }) => {
+const ButtonAnimation = ({ title, style, id, setCartItems, quantity }) => {
   const addToCart = async e => {
     if(e.target.id){
       await fetch('http://localhost:5500/products/add-to-cart', {
@@ -11,12 +11,15 @@ const ButtonAnimation = ({ title, style, id, setCartItems }) => {
         },
         body: JSON.stringify({
           productId: e.target.id,
-          userId: localStorage.userId
+          userId: localStorage.userId,
+          quantity: quantity || 1
         })
       })
         .then(res => res.json())
         .then(data => {
-          setCartItems(data['cart']);
+          if(setCartItems){
+            setCartItems(data['cart'])
+          }
         })
         .catch(err => console.error(err))
     }

@@ -48,16 +48,16 @@ User.methods.deleteFromFavorites = function (id) {
   return this.save();
 }
 
-User.methods.addToCart = function (product) {
+User.methods.addToCart = function (product, quantity) {
   const cart = [...this.cart];
   const index = cart.findIndex(p => p.productId.toString() === product._id.toString());
 
   if (index >= 0) {
-    cart[index].quantity = cart[index].quantity + 1;
+    cart[index].quantity = cart[index].quantity + quantity;
   } else {
     cart.push({
       productId: product._id,
-      quantity: 1
+      quantity
     });
   }
 

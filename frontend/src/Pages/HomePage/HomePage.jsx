@@ -11,6 +11,7 @@ import ContactSection from '../../Components/HomePageSections/ContactSection/Con
 import BlogsSection from '../../Components/HomePageSections/BlogsSection/BlogsSection';
 import Footer from '../../Components/Navigation/Footer/Footer';
 
+// eslint-disable-next-line react/prop-types
 const Home = ({ favorites, favoriteHandler }) => {
   const [cartItems, setCartItems] = useState([]);
 

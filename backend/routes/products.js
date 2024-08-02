@@ -37,12 +37,12 @@ router.post('/user-products', async (req, res) => {
 
 router.post('/add-to-cart', async (req, res) => {
     try {
-        const { productId, userId } = req.body;
+        const { productId, userId, quantity } = req.body;
         
         const product = await Products.findById(productId);
         const user = await Users.findById(userId);
 
-        await user.addToCart(product);
+        await user.addToCart(product, Number(quantity));
 
         const fullCart = await Users.findById(userId).select("cart").populate({path:"cart.productId", select:"_id imgUrl title newPrice price"})
         return res.status(200).json(fullCart)

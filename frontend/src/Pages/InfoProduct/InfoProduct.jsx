@@ -7,7 +7,7 @@ import checkProductIdExists from '../../Components/Utils/CheckIfFavorite/CheckIf
 // eslint-disable-next-line react/prop-types
 const InfoProduct = ({ favorites, favoriteHandler }) => {
     const [product, setProduct] = useState({});
-    const [quantity, setQuantity] = useState('');
+    const [quantity, setQuantity] = useState('1');
     const id = useParams();
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const InfoProduct = ({ favorites, favoriteHandler }) => {
             <div className="description">{product['text']}</div>
             <div className="options">
               <input onChange={(e) => setQuantity(e.target.value)} value={quantity} type="number" name="quantity" id="quantity" minLength={1} min={1} maxLength={2} max={50} placeholder='Quantity' />
-              <ButtonAnimation title={'Add to Cart'} />
+              <ButtonAnimation id={id.id} quantity={quantity} title={'Add to Cart'} />
               <i title='Add to Favorites' id={id.id} onClick={favoriteHandler} className={`fa-solid fa-heart ${checkProductIdExists(favorites, id.id)? 'favorite' : ''}`}></i>
             </div>
           </div>
